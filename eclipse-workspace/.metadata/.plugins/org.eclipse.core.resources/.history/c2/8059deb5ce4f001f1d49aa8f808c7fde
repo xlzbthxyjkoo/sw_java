@@ -1,9 +1,0 @@
-package com.koo.main;
-
-public class SakilaMain {
-
-	public static void main(String[] args) {
-	
-	}
-	
-}
