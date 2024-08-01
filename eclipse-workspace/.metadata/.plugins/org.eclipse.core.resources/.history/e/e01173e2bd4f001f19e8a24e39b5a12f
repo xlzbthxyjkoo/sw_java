@@ -1,0 +1,27 @@
+package com.koo.service;
+
+import java.util.List;
+
+import com.koo.dao.SakilaDao;
+import com.koo.model.Film;
+
+public class FilmsByGenre {
+	private void getFilmsByGenre(String genre) {
+		SakilaDao sakil = new SakilaDao();
+		List<Film> films = sakil.getFilms(genre);
+		for(Film film: films) {
+			System.out.print(film.filmId());
+			System.out.print(" ");
+			System.out.print(film.title());
+			System.out.print(" ");
+			System.out.print(film.genre());
+			System.out.print(" ");
+			System.out.print(film.releaseYear());
+			System.out.print(" ");
+			System.out.println(film.langueage());
+		}
+		System.out.println();
+		
+	}
+
+}

@@ -1,0 +1,38 @@
+package com.koo.dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+public class SakilaDao {
+	private static Connection conn;
+	private static ResultSet rSet; 
+	private static PreparedStatement pStmt;
+	private static String url = "jdbc:mysql://localhost:3306/sakila?serverTimeZone=UTC";
+	private static String username = "koo";
+	private static String password = "1234";
+	
+	private void getConnection() {
+		
+		try {
+			conn = DriverManager.getConnection(url, username, password);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	private void closeConnection() {
+		try {
+			if(rSet != null)
+				rSet.close();
+			if(pStmt != null)
+				pStmt.close();
+			if(conn != null)
+				conn.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+}

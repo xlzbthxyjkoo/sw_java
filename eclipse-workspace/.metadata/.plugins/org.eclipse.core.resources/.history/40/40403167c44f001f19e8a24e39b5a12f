@@ -1,0 +1,22 @@
+package com.koo.service;
+
+import java.util.Scanner;
+
+import com.koo.dao.SakilaDao;
+
+public class TitlesByActor {
+	private Scanner scanner;
+	
+	public TitlesByActor(Scanner scanner) {
+		this.scanner = scanner;
+	}
+	
+	public void getTitlesByActor() {
+		System.out.println("name of actor: ");
+		String actor = scanner.nextLine();
+		
+		SakilaDao sakil = new SakilaDao();
+		
+	}
+
+}

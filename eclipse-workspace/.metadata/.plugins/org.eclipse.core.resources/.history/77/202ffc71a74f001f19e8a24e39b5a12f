@@ -1,0 +1,69 @@
+package com.koo.main;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Scanner;
+
+
+public class SakilaMain {
+	private static Connection conn;
+	private static ResultSet rSet; 
+	private static PreparedStatement pStmt;
+	private static String url = "jdbc:mysql://localhost:3306/sakila?serverTimeZone=UTC";
+	private static String username = "koo";
+	private static String password = "1234";
+	private static Scanner scanner;
+	
+	public static void main(String[] args) {
+		getFilms("action");
+	
+	}
+	private static void getFilms(String genre) {
+		try {
+			conn = DriverManager.getConnection(url, username, password);
+			
+			StringBuffer sb = new StringBuffer();
+			//append 할 때 , 아니면 맨 뒤에 한 칸씩 공백 넣기
+			sb.append("select FL.film_id, FL.title,CG.name as genre");
+			sb.append(", FL.release_year, L.name as language ");
+			sb.append("from film FL join film_category FC on FL.film_id = FC.film_id ");
+			sb.append("join category CG on FC.category_id = CG.category_id ");
+			sb.append("join language L on FL.language_id = L.language_id ");
+			sb.append("where CG.name = ?");
+			
+			String sql = sb.toString();		
+			pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1,  "action");
+			rSet = pStmt.executeQuery();
+			
+			while(rSet.next()) {
+				System.out.print(rSet.getLong(1));
+				System.out.print(" ");
+				System.out.print(rSet.getString(2));
+				System.out.print(" ");
+				System.out.print(rSet.getString(3));
+				System.out.print(" ");
+				System.out.print(rSet.getLong(4));
+				System.out.print(" ");
+				System.out.println(rSet.getString(5));
+				
+			}
+				
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if(rSet != null)
+					rSet.close();
+				if(pStmt != null)
+					pStmt.close();
+				if(conn != null)
+					conn.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}		
+	}
+}

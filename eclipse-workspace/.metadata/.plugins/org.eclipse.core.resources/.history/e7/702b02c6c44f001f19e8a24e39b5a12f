@@ -1,0 +1,45 @@
+package com.koo.main;
+
+import java.util.Scanner;
+
+import com.koo.service.FilmsByGenre;
+import com.koo.service.TitlesByActor;
+
+public class SakilaMain {
+	
+	private static Scanner scanner;
+
+	public static void main(String[] args) {
+		scanner = new Scanner(System.in);
+		String inputString;
+		
+		while(true) {
+			System.out.println("Select Menu");
+			System.out.println("====================");
+			System.out.println("a. Films by genre");
+			System.out.println("b. Titles by actor");
+			System.out.println("q. Quit");
+			System.out.print("> ");
+			inputString = scanner.nextLine();
+			
+			switch(inputString) {
+			case "a":
+				FilmsByGenre filmsGenre = new FilmsByGenre(scanner);
+				filmsGenre.getFilmsByGenre();
+				break;
+			case "b":
+				TitlesByActor titlesByActor = new TitlesByActor(scanner);
+				filmsGenre.getFilmsByGenre();
+				break;
+			case "q":
+				scanner.close();
+				System.exit(0);
+				break;
+			}
+			
+		}
+	
+	}
+	
+	
+}

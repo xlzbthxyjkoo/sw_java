@@ -1,0 +1,21 @@
+package com.koo.main;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+
+public class SakilaMain {
+	public static void main(String[] args) {
+		Connection conn;
+		ResultSet rSet; 
+		PreparedStatement pStmt;
+		
+		String url = "jdbc:mysql://localhost:3306/sakila?serverTimeZone=UTC";
+		String username = "koo";
+		String password = "1234";
+		
+		
+	}
+
+}

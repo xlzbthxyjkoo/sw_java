@@ -1,0 +1,46 @@
+package com.koo.service;
+
+import java.util.List;
+import java.util.Scanner;
+
+import com.koo.dao.SakilaDao;
+import com.koo.model.Film;
+import com.koo.model.TitleActor;
+
+public class TitlesByActor {
+	private Scanner scanner;
+	
+	public TitlesByActor(Scanner scanner) {
+		this.scanner = scanner;
+	}
+	
+	public void getTitlesByActor() {
+		String fullName, firstName, lastName;
+		System.out.println("First-Name Last-Name: ");
+		fullName = scanner.nextLine();
+		//space 기준으로 앞에, 뒤에
+		firstName = fullName.split("\\s+")[0];
+		lastName = fullName.split("\\s+")[1];
+		
+		SakilaDao sakil = new SakilaDao();
+		List<TitleActor> titles = sakil.getTitleByActor(firstName, lastName);
+		if(titles.size() == 0) {
+			System.out.println("No data found!");
+		} else {
+			for(TitleActor film: titles) {
+				System.out.print(film.filmId());
+				System.out.print(" ");
+				System.out.print(film.title());
+				System.out.print(" ");
+				System.out.print(film.genre());
+				System.out.print(" ");
+				System.out.print(film.releaseYear());
+				System.out.print(" ");
+				System.out.println(film.langueage());
+			}
+			System.out.println();
+		}
+		
+	}
+
+}

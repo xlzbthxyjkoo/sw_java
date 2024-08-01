@@ -1,0 +1,17 @@
+package com.koo.main;
+
+import java.util.Scanner;
+
+import com.koo.service.JobFactory;
+import com.koo.service.SakilaWork;
+
+
+public class SakilaMain {
+	
+	private static Scanner scanner;
+
+	public static void main(String[] args) {
+	
+	}
+	
+}
