@@ -1,5 +1,8 @@
 package com.koo.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +18,7 @@ import com.koo.service.BoardService;
 public class RestSvcController {
 	private NoticeBoard noticeBoard;
 	private BoardService boardService;
+	private List<NoticeBoard> articleList = new ArrayList<>();
 	
 	Logger logger = LoggerFactory.getLogger("com.koo.controller.RestSvcController");
 	
@@ -34,6 +38,14 @@ public class RestSvcController {
 		noticeBoard = boardService.viewArticle(articleNo);
 		return noticeBoard;
 	}
+	
+	@GetMapping("/list")
+	public List<NoticeBoard> getArticleList() {
+		articleList = boardService.listArticles();
+		return articleList;
+	}
+	
+	
 	
 
 }
