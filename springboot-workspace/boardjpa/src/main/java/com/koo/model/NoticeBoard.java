@@ -10,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,6 +33,10 @@ public class NoticeBoard {
 	@CreationTimestamp
 	private LocalDateTime write_date;
 	
-	@Column(length=50)
-	private String write_id;
+	//@Column(length=50)
+	//private String write_id;
+	
+	@ManyToOne
+	private BoardUser writer;
+	
 }

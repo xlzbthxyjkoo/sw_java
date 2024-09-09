@@ -64,7 +64,7 @@
                 <tr>
                     <td width="150" align="center" bgcolor="#FF9933">작성자</td>
                     <td>
-                        <input type="text" th:value="${article.write_id}" name="writer" disabled>
+                        <input type="text" th:value="${article.writer.username}" name="writer" disabled>
                     </td>
                 </tr>
                 <tr>
@@ -87,9 +87,14 @@
                 </tr>
                 <tr id="tr_btn">
                     <td colspan="2" align="center">
-                        <input type="button" th:value="수정" onclick="fn_enable()">
+                        <input type="button" th:value="수정" onclick="fn_enable()" sec:authorize="isAuthenticated()" 
+                            th:if="${#authentication.getPrincipal().getUsername()==article.writer.username}">
+
                         <input type="button" th:value="삭제"
-                            th:onclick="|fn_remove('@{/notice/remove}','${article.id}')|">
+                            th:onclick="|fn_remove('@{/notice/remove}','${article.id}')|"
+                            sec:authorize="isAuthenticated()" 
+                            th:if="${#authentication.getPrincipal().getUsername()==article.writer.username}">
+                            
                         <input type="button" th:value="목록보기" onclick="backToList(articleForm)">
                     </td>
                 </tr>

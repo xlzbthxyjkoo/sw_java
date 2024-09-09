@@ -1,11 +1,11 @@
 package com.koo.controller;
 
-import com.koo.model.NoticeBoard;
-import com.koo.service.BoardService;
+import java.security.Principal;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.koo.model.NoticeBoard;
+import com.koo.service.BoardService;
+import com.koo.service.UserService;
+
 import lombok.RequiredArgsConstructor;
 
 @Controller("boardController")
@@ -22,10 +26,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BoardController {
 	private final BoardService boardService;
+	private final UserService userService;
 
 	private List<NoticeBoard> articleList;
 
-	Logger logger = LoggerFactory.getLogger("wnsud9771.controller.BoardController");
+	Logger logger = LoggerFactory.getLogger("com.koo.controller.BoardController");
 
 	@RequestMapping({ "/list", "/" })
 	public String getArticleList(Model model) {
@@ -35,6 +40,7 @@ public class BoardController {
 	}
 
 	@RequestMapping("/add")
+	@PreAuthorize("isAuthenticated")
 	public String writeArticle() {
 
 		logger.info("글쓰기 실행");
@@ -42,12 +48,13 @@ public class BoardController {
 	}
 
 	@PostMapping(value = "/addarticle")
+	@PreAuthorize("isAuthenticated")
 	public String addArticle(@RequestParam(value = "i_title") String title,
-			@RequestParam(value = "i_content") String content) {
+			@RequestParam(value = "i_content") String content, Principal principal) {
 		NoticeBoard noticeBoard = new NoticeBoard();
 		noticeBoard.setTitle(title);
 		noticeBoard.setContent(content);
-		noticeBoard.setWrite_id("bit");
+		noticeBoard.setWriter(userService.getUser(principal.getName()));
 
 		boardService.addArticle(noticeBoard);
 
@@ -68,6 +75,7 @@ public class BoardController {
 	}
 
 	@PostMapping(value = "/edit")
+	@PreAuthorize("isAuthenticated")
 	public String editArticle(@RequestParam Integer article_No, @RequestParam String title, @RequestParam String content,RedirectAttributes redirectAtt) {
 		NoticeBoard noticeBoard = new NoticeBoard();
 		noticeBoard.setId(article_No);
@@ -81,6 +89,7 @@ public class BoardController {
 	}
 
 	@PostMapping(value = "/remove")
+	@PreAuthorize("isAuthenticated")
 	public String removeArticle(@RequestParam Integer articleNo) {
 		boardService.deleteArticle(articleNo);
 		return "redirect:list";

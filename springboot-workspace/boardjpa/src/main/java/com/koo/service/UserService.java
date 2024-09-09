@@ -1,9 +1,12 @@
 package com.koo.service;
 
+import java.util.Optional;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.koo.model.BoardUser;
+import com.koo.model.DataNotFoundException;
 import com.koo.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -22,6 +25,16 @@ public class UserService {
 		userRepository.save(user);
 		
 		return user;
+	}
+	
+	public BoardUser getUser(String name) {
+		Optional<BoardUser> boardUser = userRepository.findByUsername(name);
+		if(boardUser.isPresent()) {
+			return boardUser.get();
+		}
+		else {
+			throw new DataNotFoundException("board_user not found!");
+		}
 	}
 }
 
