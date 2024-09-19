@@ -15,7 +15,7 @@ class ApiClient {
             }),
         });
     }
-    static getAttemps(userAlias) {
+    static getAttempts(userAlias) {
         return fetch(ApiClient.SERVER_URL + ApiClient.GET_BY_ALIAS + userAlias);
     }
 }

@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from "react";
 import ApiClient from "../services/ApiClient";
+import LastAttemptsComponent from "./LastAttemptsComponent";
 
 function ChallengeComponent() {
     const [userChoice, setUserChoice] = useState("");
     const [user, setUser] = useState("");
     const [message, setMessage] = useState("");
+    const [lastAttempts, setlastAttempts] = useState([]);
 
     let getImageSource = (index) => {
         let img_src = "";
@@ -42,6 +44,21 @@ function ChallengeComponent() {
     let handleChangeName = (event) => {
         setUser(event.target.value);
     };
+
+    let updateLastAttempts = (userAlias) => {
+        ApiClient.getAttempts(userAlias).then(res => {
+            if(res.ok) {
+                let attempts = [];
+                res.json().then(data => {
+                    data.forEach(item => {
+                        attempts.push(item);
+                    });
+                    setlastAttempts(attempts);
+                });
+            }
+        });
+    }
+
     let handleSubmitResult = (event) => {
         ApiClient.sendChoice(user, userChoice).then(res => {
             if(res.ok) {
@@ -56,7 +73,8 @@ function ChallengeComponent() {
                         updateMessage("비겼습니다. 다시 한 번 도전해보세요!")
                     }
                     handleChangeOpponentImage(json.opponent);
-                })
+                    updateLastAttempts(user);
+                });
             }
             else {
                 updateMessage("Error: server error or not available");
@@ -67,6 +85,7 @@ function ChallengeComponent() {
     let updateMessage = (m) => {
         setMessage(m);
     };
+
 
     useEffect(() => {
         let choice = document.querySelector("#rps");
@@ -105,6 +124,8 @@ function ChallengeComponent() {
                 <h2>
                     <span className="result-message">{message}</span>
                 </h2>
+                <h2>최근 답안</h2>
+                {lastAttempts.length > 0 && < LastAttemptsComponent lastAttempts={lastAttempts} /> }
             </div>
         </div>
     );
