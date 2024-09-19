@@ -18,3 +18,8 @@
 * jwt
 * [과제] boardjpa에 댓글 기능 추가하기<br/>
 
+**240929 - **
+[가위바위보 게임 만들기]
+* Front - Vite + React
+* Back - Spring
+* DB - MySQL<br/>
