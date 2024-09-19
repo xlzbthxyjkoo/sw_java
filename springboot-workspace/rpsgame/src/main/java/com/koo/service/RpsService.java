@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import com.koo.domain.RpsChallenge;
@@ -17,6 +18,7 @@ import com.koo.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
+@Service
 @RequiredArgsConstructor
 public class RpsService {
 	private final RandomGeneratorService randomGeneratorService;
@@ -72,7 +74,7 @@ public class RpsService {
 		
 		rpsChallengeRepository.save(checkedChallenge);
 		
-		map.put("oponent", computerChoice.getCommentary());
+		map.put("opponent", computerChoice.getCommentary());
 		map.put("outcome", checkedChallenge.getGameResult().getCommentary());
 		map.put("userId", "" + checkedChallenge.getUser().getId());
 		
