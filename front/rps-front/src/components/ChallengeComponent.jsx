@@ -1,12 +1,16 @@
 import React, {useEffect, useState} from "react";
-import ApiClient from "../services/ApiClient";
+import RpsApiClient from "../services/RpsApiClient";
 import LastAttemptsComponent from "./LastAttemptsComponent";
+import StatsComponent from "./StatsComponent";
 
 function ChallengeComponent() {
     const [userChoice, setUserChoice] = useState("");
     const [user, setUser] = useState("");
     const [message, setMessage] = useState("");
     const [lastAttempts, setlastAttempts] = useState([]);
+    const [userId, setUserId] = useState("");
+    const [actionFlag, setActionFlag] = useState(1);
+
 
     let getImageSource = (index) => {
         let img_src = "";
@@ -46,7 +50,7 @@ function ChallengeComponent() {
     };
 
     let updateLastAttempts = (userAlias) => {
-        ApiClient.getAttempts(userAlias).then(res => {
+        RpsApiClient.getAttempts(userAlias).then(res => {
             if(res.ok) {
                 let attempts = [];
                 res.json().then(data => {
@@ -60,9 +64,11 @@ function ChallengeComponent() {
     }
 
     let handleSubmitResult = (event) => {
-        ApiClient.sendChoice(user, userChoice).then(res => {
+        RpsApiClient.sendChoice(user, userChoice).then(res => {
             if(res.ok) {
                 res.json().then(json => {
+                    setUserId(json.userId);
+                    setActionFlag(actionFlag * -1);
                     if(json.outcome === "승") {
                         updateMessage("이겼습니다.")
                     }
@@ -126,6 +132,7 @@ function ChallengeComponent() {
                 </h2>
                 <h2>최근 답안</h2>
                 {lastAttempts.length > 0 && < LastAttemptsComponent lastAttempts={lastAttempts} /> }
+                <StatsComponent id={userId} flag={actionFlag} />
             </div>
         </div>
     );

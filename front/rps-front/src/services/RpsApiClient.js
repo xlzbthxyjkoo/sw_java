@@ -1,10 +1,10 @@
-class ApiClient {
+class RpsApiClient {
     static SERVER_URL = 'http://localhost:8080';
     static POST_RESULT = '/results';
     static GET_BY_ALIAS = "/results?alias=";
 
     static sendChoice(user, choice) {
-        return fetch(ApiClient.SERVER_URL + ApiClient.POST_RESULT, {
+        return fetch(RpsApiClient.SERVER_URL + RpsApiClient.POST_RESULT, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -16,8 +16,8 @@ class ApiClient {
         });
     }
     static getAttempts(userAlias) {
-        return fetch(ApiClient.SERVER_URL + ApiClient.GET_BY_ALIAS + userAlias);
+        return fetch(RpsApiClient.SERVER_URL + RpsApiClient.GET_BY_ALIAS + userAlias);
     }
 }
 
-export default ApiClient;
+export default RpsApiClient;
