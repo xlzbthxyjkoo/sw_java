@@ -12,6 +12,8 @@ import com.koo.domain.RpsChallenge;
 import com.koo.domain.User;
 import com.koo.enums.GameResult;
 import com.koo.enums.RockPaperScissors;
+import com.koo.event.EventDispatcher;
+import com.koo.event.RpsSolvedEvent;
 import com.koo.repository.RpsChallengeRepository;
 import com.koo.repository.UserRepository;
 
@@ -24,6 +26,7 @@ public class RpsService {
 	private final RandomGeneratorService randomGeneratorService;
 	private final RpsChallengeRepository rpsChallengeRepository;
 	private final UserRepository userRepository;
+	private final EventDispatcher eventDispatcher;
 	
 	private RockPaperScissors createRandomRps() {
 		return randomGeneratorService.getRockPaperScissors();
@@ -73,6 +76,11 @@ public class RpsService {
 		RpsChallenge checkedChallenge = new RpsChallenge(user.orElse(rpsChallenge.getUser()), rpsChallenge.getRps(), computerChoice, gameResult);
 		
 		rpsChallengeRepository.save(checkedChallenge);
+		
+		// 이벤트로 결과를 전송
+        eventDispatcher.send(new RpsSolvedEvent(checkedChallenge.getId(), checkedChallenge.getUser().getId(),
+                checkedChallenge.getUser().getAlias(), checkedChallenge.getGameResult().getCommentary())
+        );
 		
 		map.put("opponent", computerChoice.getCommentary());
 		map.put("outcome", checkedChallenge.getGameResult().getCommentary());
