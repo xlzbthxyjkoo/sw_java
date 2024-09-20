@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import RpsApiClient from "../services/RpsApiClient";
 import LastAttemptsComponent from "./LastAttemptsComponent";
 import StatsComponent from "./StatsComponent";
+import LeaderboardComponent from "./LeaderBoardComponent";
 
 function ChallengeComponent() {
     const [userChoice, setUserChoice] = useState("");
@@ -132,7 +133,10 @@ function ChallengeComponent() {
                 </h2>
                 <h2>최근 답안</h2>
                 {lastAttempts.length > 0 && < LastAttemptsComponent lastAttempts={lastAttempts} /> }
+                <hr/>
                 <StatsComponent id={userId} flag={actionFlag} />
+                <hr/>
+                <LeaderboardComponent flag={actionFlag} />
             </div>
         </div>
     );
