@@ -18,8 +18,15 @@
 * jwt
 * [과제] boardjpa에 댓글 기능 추가하기<br/>
 
-**240929 -**<br/>
+**240919**<br/>
 [가위바위보 게임 만들기]
 * Front - Vite + React
 * Back - Spring
 * DB - MySQL<br/>
+
+**240920**<br/>
+[가위바위보 게임 - MSA]
+* RabbitMQ
+* Erlang
+* WSL
+* Docker
