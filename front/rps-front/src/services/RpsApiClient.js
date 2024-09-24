@@ -1,5 +1,5 @@
 class RpsApiClient {
-    static SERVER_URL = 'http://localhost:8080';
+    static SERVER_URL = 'http://localhost:8000';
     static POST_RESULT = '/results';
     static GET_BY_ALIAS = "/results?alias=";
 

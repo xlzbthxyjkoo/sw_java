@@ -10,7 +10,9 @@ import com.koo.domain.LeaderBoardRow;
 import com.koo.service.LeaderBoardService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/leaders")
@@ -19,6 +21,7 @@ public class LeaderBoardController {
 	
 	@GetMapping
 	public List<LeaderBoardRow> getLeaderBoard() {
+		log.info("Retrieving leaderboard!!");
 		return leaderBoardService.getCurrentLeaderBoard();
 	}
 
